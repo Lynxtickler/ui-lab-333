@@ -1,0 +1,23 @@
+name: CI/CD
+
+on:
+  - push
+  - workflow_dispatch
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+      - uses: aws-actions/configure-aws-credentials@5.1.1
+        with:
+          role-to-assume: ${{ vars.ROLE_TO_ASSUME }}
+          role-session-name: cicd-session
+          aws-region: ${{ vars.AWS_REGION }}
